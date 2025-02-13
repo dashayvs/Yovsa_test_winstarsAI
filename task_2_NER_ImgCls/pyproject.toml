@@ -6,11 +6,12 @@ requires = ["setuptools >= 61.0", "setuptools-scm >= 7"]
 packages = ["src"]
 
 [project]
-name = "ner_imgcls"
+name = "mnist_classification"
 version = "0.1.0"
-description = "A project for Named Entity Recognition and Image Classification"
+description = "A project for Image Classification using MNIST dataset with different models."
 requires-python = ">= 3.12"
 dependencies = [
+
 
 ]
 
