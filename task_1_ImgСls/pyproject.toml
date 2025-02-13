@@ -1,0 +1,89 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools >= 61.0", "setuptools-scm >= 7"]
+
+[tool.setuptools]
+packages = ["src"]
+
+[project]
+name = "ner_imgcls"
+version = "0.1.0"
+description = "A project for Named Entity Recognition and Image Classification"
+requires-python = ">= 3.12"
+dependencies = [
+
+]
+
+[project.optional-dependencies]
+tests = [
+    "ruff",
+    "mypy"
+    ]
+
+[tool.mypy]
+files = ["src"]
+plugins = ["numpy.typing.mypy_plugin"]
+pretty = true
+show_error_codes = true
+strict = true
+warn_unreachable = true
+
+#[[tool.mypy.overrides]]
+#ignore_missing_imports = true
+#module = [
+#  "scipy.*",
+#  "sklearn.*",
+#  "inflect.*",
+#  "transformers.*",
+#  "nltk.*",
+#  "streamlit.*",
+#  "sentence_transformers.*",
+#]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint]
+select = [
+    "I",
+    "F",
+    "E",
+    "W",
+    "N",
+    "UP",
+    "S",
+    "BLE",
+    "FBT",
+    "B",
+    "A",
+    "COM",
+    "C4",
+    "T10",
+    "FA",
+    "ICN",
+    "PIE",
+    "T20",
+    "Q",
+    "RSE",
+    "RET",
+    "SIM",
+    "TID",
+    "ARG",
+    "PTH",
+    "PD",
+    "PL",
+    "NPY",
+    "PERF",
+    "RUF"
+]
+ignore = [
+    "E501",
+    "COM812",
+    "RET504",
+    "PLR0913",
+    "S101",
+    "ARG002", #!!!!
+]
