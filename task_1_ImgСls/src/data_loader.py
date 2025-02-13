@@ -1,7 +1,7 @@
 import numpy as np
 import torch
-from torchvision import datasets, transforms
-from sklearn import datasets
+import torchvision
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import DataLoader
@@ -15,27 +15,21 @@ def load_data(library: str = 'pytorch',
                                          tuple[npt.NDArray[np.float32], npt.NDArray[np.float32],
                                          npt.NDArray[np.float32], npt.NDArray[np.float32]]):
     if library == 'pytorch':
-        transform = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize((0.1307,), (0.3081,))
+        transform = torchvision.transforms.Compose([
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize((0.1307,), (0.3081,))
         ])
 
-        full_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+        train = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+        train_loader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
 
-        test_size = int(len(full_dataset) * test_split)
-        train_size = len(full_dataset) - test_size
-
-        train_dataset, test_dataset = torch.utils.data.random_split(full_dataset, [train_size, test_size],
-                                                                    generator=torch.Generator().manual_seed(
-                                                                        random_seed))
-
-        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+        test = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+        test_loader = torch.utils.data.DataLoader(test, batch_size=batch_size, shuffle=False)
 
         return train_loader, test_loader
 
     elif library == 'sklearn':
-        mnist = datasets.fetch_openml('mnist_784', version=1)
+        mnist = sklearn.datasets.fetch_openml('mnist_784', version=1)
         X = mnist['data'].values.astype('float32')
         y = mnist['target'].astype('int64')
 
