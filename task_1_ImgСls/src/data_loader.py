@@ -4,14 +4,14 @@ import torchvision
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 import numpy.typing as npt
 
 
 def load_data(library: str = 'pytorch',
               batch_size: int = 64,
               test_split: float = 0.2,
-              random_seed: int = 42) -> (tuple[DataLoader, DataLoader] |
+              random_seed: int = 42) -> (tuple[DataLoader, DataLoader, torch.stack, torch.tensor] |
                                          tuple[npt.NDArray[np.float32], npt.NDArray[np.float32],
                                          npt.NDArray[np.float32], npt.NDArray[np.float32]]):
     if library == 'pytorch':
@@ -20,13 +20,23 @@ def load_data(library: str = 'pytorch',
             torchvision.transforms.Normalize((0.1307,), (0.3081,))
         ])
 
-        train = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-        train_loader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
+        full_train_dataset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
 
-        test = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
-        test_loader = torch.utils.data.DataLoader(test, batch_size=batch_size, shuffle=False)
+        val_size = int(0.2 * len(full_train_dataset))
+        train_size = len(full_train_dataset) - val_size
 
-        return train_loader, test_loader
+        train_dataset, val_dataset = random_split(full_train_dataset, [train_size, val_size])
+
+        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+
+        test_dataset = torchvision.datasets.MNIST(root='./data', train=False, download=True,
+                                                  transform=torchvision.transforms.ToTensor())
+        test_images, test_labels = zip(*test_dataset)
+        test_images = torch.stack(test_images)
+        test_labels = torch.tensor(test_labels)
+
+        return train_loader, val_loader, test_images, test_labels
 
     elif library == 'sklearn':
         mnist = sklearn.datasets.fetch_openml('mnist_784', version=1)
