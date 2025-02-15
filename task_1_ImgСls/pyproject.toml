@@ -9,16 +9,13 @@ packages = ["src"]
 name = "ner_imgcls"
 version = "0.1.0"
 description = "A project for Named Entity Recognition and Image Classification"
-requires-python = ">= 3.12"
+requires-python = ">= 3.11"
 dependencies = [
     "numpy",
     "torch",
     "joblib",
-    "sklearn",
+    "scikit-learn",
     "torchvision",
-    "abc",
-    "pathlib",
-    "typing",
 ]
 
 [project.optional-dependencies]
