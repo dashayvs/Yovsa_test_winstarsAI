@@ -11,14 +11,21 @@ version = "0.1.0"
 description = "A project for Named Entity Recognition and Image Classification"
 requires-python = ">= 3.12"
 dependencies = [
-
+    "numpy",
+    "torch",
+    "joblib",
+    "sklearn",
+    "torchvision",
+    "abc",
+    "pathlib",
+    "typing",
 ]
 
 [project.optional-dependencies]
 tests = [
     "ruff",
     "mypy"
-    ]
+]
 
 [tool.mypy]
 files = ["src"]
@@ -28,17 +35,13 @@ show_error_codes = true
 strict = true
 warn_unreachable = true
 
-#[[tool.mypy.overrides]]
-#ignore_missing_imports = true
-#module = [
-#  "scipy.*",
-#  "sklearn.*",
-#  "inflect.*",
-#  "transformers.*",
-#  "nltk.*",
-#  "streamlit.*",
-#  "sentence_transformers.*",
-#]
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+    "joblib.*",
+    "sklearn.*",
+    "torchvision.*"
+]
 
 [tool.ruff]
 line-length = 100
@@ -85,5 +88,7 @@ ignore = [
     "RET504",
     "PLR0913",
     "S101",
-    "ARG002", #!!!!
+    "T201",
+    "PLR2004",
+    "N806"
 ]
