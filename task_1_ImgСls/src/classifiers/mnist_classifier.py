@@ -36,4 +36,3 @@ class MnistClassifier:
         instance = cls(algorithm)
         instance.model = instance.model.__class__.load(path)
         return instance
-
