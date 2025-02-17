@@ -13,6 +13,9 @@ def parse_args():
 
 
 def check(img_pth: str, text: str) -> bool:
+    """
+    Checks if the animal in the input image matches the entity mentioned in the input text.
+    """
     img_class = predict(img_pth)
 
     entity = infer_ner(text)

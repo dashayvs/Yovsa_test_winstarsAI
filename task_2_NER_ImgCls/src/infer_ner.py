@@ -5,6 +5,12 @@ from paths import NER_MODEL_PATH
 
 
 def infer_ner(text: str) -> list:
+    """
+    Extracts named entities from the input text using a pre-trained NER model.
+
+    This function uses SpaCy to process the text and extract named entities
+    such as animal names. It returns a list of entities recognized in the text.
+    """
     nlp = spacy.load(NER_MODEL_PATH)
 
     doc = nlp(text)

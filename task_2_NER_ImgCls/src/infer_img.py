@@ -17,6 +17,12 @@ def parse_args():
 
 
 def initialize_model() -> tuple[EfficientNet, str, list[str]]:
+    """
+    Initializes the EfficientNet model, loads pre-trained weights, and sets up the device for inference.
+
+    This function loads the model architecture, transfers it to the appropriate
+    device (GPU or CPU), and loads the class labels
+    """
     with Path.open(CLASSES_PATH) as f:
         output_classes: list[str] = json.load(f)
 
@@ -31,6 +37,12 @@ def initialize_model() -> tuple[EfficientNet, str, list[str]]:
 
 
 def predict(image_path: str | Path) -> str:
+    """
+    Predicts the class of the input image using the trained model.
+
+    This function handles the image preprocessing (resizing, cropping, normalization),
+    passes the image through the model, and returns the predicted class label.
+    """
     model, device, output_classes = initialize_model()
 
     img = Image.open(image_path)
