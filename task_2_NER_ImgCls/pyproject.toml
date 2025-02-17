@@ -1,25 +1,28 @@
 [build-system]
+requires = ["setuptools>=40.8.0", "wheel"]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools >= 61.0", "setuptools-scm >= 7"]
 
 [tool.setuptools]
 packages = ["src"]
 
 [project]
-name = "mnist_classification"
+name = "NER_IMGcls"
 version = "0.1.0"
-description = "A project for Image Classification using MNIST dataset with different models."
 requires-python = ">= 3.12"
 dependencies = [
-
-
+    "torch",
+    "torchvision",
+    "argparse",
+    "Pillow",
+    "spacy",
+    "inflect"
 ]
 
 [project.optional-dependencies]
 tests = [
     "ruff",
     "mypy"
-    ]
+]
 
 [tool.mypy]
 files = ["src"]
@@ -29,17 +32,11 @@ show_error_codes = true
 strict = true
 warn_unreachable = true
 
-#[[tool.mypy.overrides]]
-#ignore_missing_imports = true
-#module = [
-#  "scipy.*",
-#  "sklearn.*",
-#  "inflect.*",
-#  "transformers.*",
-#  "nltk.*",
-#  "streamlit.*",
-#  "sentence_transformers.*",
-#]
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+    "inflect.*"
+]
 
 [tool.ruff]
 line-length = 100
@@ -86,5 +83,8 @@ ignore = [
     "RET504",
     "PLR0913",
     "S101",
-    "ARG002", #!!!!
+    "T201",
+    "PLR2004",
+    "N806"
 ]
+
