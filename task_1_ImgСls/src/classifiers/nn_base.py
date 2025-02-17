@@ -4,12 +4,20 @@ from typing import Self
 import numpy as np
 import numpy.typing as npt
 import torch
+
+from task_1_ImgСls.src.EarlyStopping import EarlyStopping
 from task_1_ImgСls.src.classifiers.interface import MnistClassifierInterface
 from torch import nn, optim
 from torch.utils.data import DataLoader
 
 
 class BaseNNMnistClassifier(MnistClassifierInterface):
+    """
+    Base class for neural network-based MNIST classifiers.
+
+    This class implements training, validation, prediction, saving, and loading
+    functionalities for PyTorch-based neural network models.
+    """
     def __init__(self, model: nn.Module):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = model.to(self.device)
@@ -19,9 +27,7 @@ class BaseNNMnistClassifier(MnistClassifierInterface):
     def train(
         self, train_loader: DataLoader, val_loader: DataLoader, epochs: int = 50, patience: int = 5
     ) -> None:
-        best_loss = float("inf")
-        best_model_weights = None
-        epochs_without_improvement = 0
+        early_stopping = EarlyStopping(patience=patience)
 
         for epoch in range(epochs):
             train_loss = self._train_one_epoch(train_loader)
@@ -30,19 +36,11 @@ class BaseNNMnistClassifier(MnistClassifierInterface):
                 f"Epoch {epoch + 1}/{epochs}, Train Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}"
             )
 
-            if val_loss < best_loss:
-                best_loss = val_loss
-                best_model_weights = self.model.state_dict()
-                epochs_without_improvement = 0
-            else:
-                epochs_without_improvement += 1
-
-            if epochs_without_improvement >= patience:
+            if early_stopping(val_loss, self.model):
                 print(f"Early stopping triggered at epoch {epoch + 1}.")
                 break
 
-        if best_model_weights:
-            self.model.load_state_dict(best_model_weights)
+        early_stopping.load_best_model(self.model)
 
     def _train_one_epoch(self, train_loader: DataLoader) -> float:
         self.model.train()
@@ -71,6 +69,7 @@ class BaseNNMnistClassifier(MnistClassifierInterface):
     def predict(self, images: torch.Tensor) -> npt.NDArray[np.int64]:
         self.model.eval()
         with torch.no_grad():
+            # If a single image is provided, add batch dimension
             if images.ndimension() == 3:
                 images = images.unsqueeze(0)
             images = images.to(self.device)

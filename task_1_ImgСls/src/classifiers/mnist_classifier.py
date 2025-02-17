@@ -12,6 +12,13 @@ from torch import Tensor
 
 
 class MnistClassifier:
+    """
+        A unified interface for different MNIST classification models.
+
+        This class allows users to choose among different classification algorithms
+        ('rf' for RandomForest, 'ffnn' for a Feed-Forward Neural Network, and 'cnn' for a Convolutional Neural Network).
+    """
+
     def __init__(self, algorithm: str = "ffnn"):
         if algorithm == "rf":
             self.model = RandomForestMnistClassifier()
@@ -23,6 +30,20 @@ class MnistClassifier:
             raise ValueError("Invalid algorithm. Choose from 'rf', 'ffnn', or 'cnn'.")
 
     def train(self, *args: Any, **kwargs: Any) -> None:
+        """
+        Trains the selected model.
+
+        Parameters (depending on the selected algorithm):
+            - Random Forest ('rf'):
+                * args[0]: x_train (npt.NDArray[np.float32]) - Training feature set.
+                * args[1]: y_train (npt.NDArray[np.int64]) - Training labels.
+
+            - Feed-Forward Neural Network ('ffnn') and Convolutional Neural Network ('cnn'):
+                * args[0]: train_loader (DataLoader) - Training data loader.
+                * args[1]: val_loader (DataLoader) - Validation data loader.
+                * kwargs['epochs']: (int, optional) - Number of training epochs (default: 50).
+                * kwargs['patience']: (int, optional) - Early stopping patience (default: 5).
+        """
         self.model.train(*args, **kwargs)
 
     def predict(self, x: npt.NDArray[np.float32] | Tensor) -> npt.NDArray[np.int64]:
