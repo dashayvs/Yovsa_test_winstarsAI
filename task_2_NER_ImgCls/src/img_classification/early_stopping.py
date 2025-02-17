@@ -1,10 +1,11 @@
 from typing import Any
 
+
 class EarlyStopping:
     def __init__(self, patience: int = 5, min_delta: float = 0.001) -> None:
         self.patience: int = patience
         self.min_delta: float = min_delta
-        self.best_loss: float = float('inf')
+        self.best_loss: float = float("inf")
         self.counter: int = 0
 
     def __call__(self, val_loss: float, model: Any) -> bool:

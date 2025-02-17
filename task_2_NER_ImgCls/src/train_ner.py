@@ -1,10 +1,11 @@
+import argparse
 import json
-import spacy
 import random
+
+import spacy
+from paths import NER_MODEL_PATH, TRAIN_NER
 from spacy.training import Example
 from spacy.util import minibatch
-import argparse
-from paths import NER_MODEL_PATH, TRAIN_NER
 
 
 def train_ner(train_data, output_dir, iterations=50):
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     parser.add_argument("--iterations", type=int, default=50, help="Number of training iterations")
     args = parser.parse_args()
 
-    with open(TRAIN_NER, "r") as file:
+    with open(TRAIN_NER) as file:
         train_data = json.load(file)
 
     train_ner(train_data, args.output, args.iterations)

@@ -1,5 +1,6 @@
-import spacy
 import argparse
+
+import spacy
 from paths import NER_MODEL_PATH
 
 

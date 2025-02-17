@@ -3,12 +3,11 @@ import json
 from pathlib import Path
 
 import torch
-from PIL import Image
-from torchvision.models import EfficientNet
-
 from img_classification.model_img import create_model
 from paths import CLASSES_PATH, IMG_MODEL_PATH
+from PIL import Image
 from torchvision import transforms
+from torchvision.models import EfficientNet
 
 
 def parse_args():

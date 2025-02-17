@@ -1,9 +1,8 @@
 import argparse
 
 import inflect
-
-from infer_ner import infer_ner
 from infer_img import predict
+from infer_ner import infer_ner
 
 
 def parse_args():

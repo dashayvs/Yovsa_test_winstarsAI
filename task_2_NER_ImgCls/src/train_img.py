@@ -1,14 +1,13 @@
 import argparse
 
 import torch
-from torch.utils.data import DataLoader
-from torchvision.models import EfficientNet
-
+from img_classification.early_stopping import EarlyStopping
 from img_classification.img_data_preprocessing import get_data_loader
 from img_classification.model_img import create_model
-from img_classification.early_stopping import EarlyStopping
 from paths import IMG_MODEL_PATH, TRAIN_DIR, VAL_DIR
 from torch import nn, optim
+from torch.utils.data import DataLoader
+from torchvision.models import EfficientNet
 
 
 def parse_args():

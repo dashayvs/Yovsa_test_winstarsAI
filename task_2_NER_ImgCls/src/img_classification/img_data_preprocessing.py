@@ -1,7 +1,8 @@
 from pathlib import Path
+
 from torch.utils.data import DataLoader
-from torchvision.datasets import ImageFolder
 from torchvision import models
+from torchvision.datasets import ImageFolder
 
 
 def get_data_loader(dataset_path: str | Path, batch_size: int) -> DataLoader:
