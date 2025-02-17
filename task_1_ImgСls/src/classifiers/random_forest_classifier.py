@@ -26,7 +26,7 @@ class RandomForestMnistClassifier(MnistClassifierInterface):
         return cast(npt.NDArray[np.int64], self.model.predict(x))
 
     def save(self, path: Path | str) -> None:
-        joblib.dump(self.model, path)
+        joblib.dump(self.model, path, compress=3)
 
     @classmethod
     def load(cls, path: Path | str) -> Self:
