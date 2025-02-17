@@ -7,6 +7,12 @@ import numpy.typing as npt
 
 
 class MnistClassifierInterface(ABC):
+    """
+    Abstract base class (interface) for MNIST classifiers.
+
+    Defines a common structure for different classification models
+    by enforcing the implementation of train, predict, save, and load methods.
+    """
     @abstractmethod
     def train(self, *args: Any, **kwargs: Any) -> None: ...
 
