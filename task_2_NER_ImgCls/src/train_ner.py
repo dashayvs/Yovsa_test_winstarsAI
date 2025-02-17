@@ -62,4 +62,4 @@ if __name__ == "__main__":
     with open(TRAIN_NER) as file:
         train_data = json.load(file)
 
-    train_ner(train_data, args.output, args.iterations)
+    train_ner(train_data, args.iterations)
