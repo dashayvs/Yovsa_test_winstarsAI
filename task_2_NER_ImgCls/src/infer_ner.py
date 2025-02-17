@@ -3,7 +3,7 @@ import argparse
 from paths import NER_MODEL_PATH
 
 
-def infer_ner(text):
+def infer_ner(text: str) -> list:
     nlp = spacy.load(NER_MODEL_PATH)
 
     doc = nlp(text)

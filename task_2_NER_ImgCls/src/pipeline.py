@@ -1,10 +1,9 @@
-
 import argparse
 
 import inflect
 
-from ner.infer_ner import infer_ner
-from img_classification.infer_img import predict
+from infer_ner import infer_ner
+from infer_img import predict
 
 
 def parse_args():
@@ -14,7 +13,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def check(img_pth, text):
+def check(img_pth: str, text: str) -> bool:
     img_class = predict(img_pth)
 
     entity = infer_ner(text)

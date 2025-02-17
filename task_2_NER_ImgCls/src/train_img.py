@@ -1,10 +1,13 @@
 import argparse
 
 import torch
-from img_data_preprocessing import get_data_loader
-from task_2_NER_ImgCls.src.img_classification.model_img import create_model
-from task_2_NER_ImgCls.src.img_classification.early_stopping import EarlyStopping
-from task_2_NER_ImgCls.src.paths import IMG_MODEL_PATH, TRAIN_DIR, VAL_DIR
+from torch.utils.data import DataLoader
+from torchvision.models import EfficientNet
+
+from img_classification.img_data_preprocessing import get_data_loader
+from img_classification.model_img import create_model
+from img_classification.early_stopping import EarlyStopping
+from paths import IMG_MODEL_PATH, TRAIN_DIR, VAL_DIR
 from torch import nn, optim
 
 
@@ -17,7 +20,14 @@ def parse_args():
     return parser.parse_args()
 
 
-def train_model(train_loader, val_loader, device, epochs, learning_rate, patience):
+def train_model(
+        train_loader: DataLoader,
+        val_loader: DataLoader,
+        device: str,
+        epochs: int,
+        learning_rate: float,
+        patience: int
+) -> EfficientNet:
     model = create_model().to(device)
 
     loss_fn = nn.CrossEntropyLoss()

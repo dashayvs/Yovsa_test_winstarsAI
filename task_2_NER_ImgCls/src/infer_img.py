@@ -4,6 +4,8 @@ from pathlib import Path
 
 import torch
 from PIL import Image
+from torchvision.models import EfficientNet
+
 from img_classification.model_img import create_model
 from paths import CLASSES_PATH, IMG_MODEL_PATH
 from torchvision import transforms
@@ -15,19 +17,21 @@ def parse_args():
     return parser.parse_args()
 
 
-def initialize_model():
+def initialize_model() -> tuple[EfficientNet, str, list[str]]:
     with Path.open(CLASSES_PATH) as f:
-        output_classes = json.load(f)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    model = create_model(output_shape=len(output_classes))
-    model.load_state_dict(torch.load(IMG_MODEL_PATH))
+        output_classes: list[str] = json.load(f)
+
+    device: str = "cuda" if torch.cuda.is_available() else "cpu"
+    model: EfficientNet = create_model(output_shape=len(output_classes))
+
+    model.load_state_dict(torch.load(IMG_MODEL_PATH))  # type: ignore[arg-type]
     model.to(device)
     model.eval()
 
     return model, device, output_classes
 
 
-def predict(image_path):
+def predict(image_path: str | Path) -> str:
     model, device, output_classes = initialize_model()
 
     img = Image.open(image_path)
