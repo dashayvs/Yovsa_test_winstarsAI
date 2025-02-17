@@ -8,7 +8,7 @@ from spacy.training import Example
 from spacy.util import minibatch
 
 
-def train_ner(train_data, output_dir, iterations=50):
+def train_ner(train_data, iterations=50):
     nlp = spacy.blank("en")
     if "ner" not in nlp.pipe_names:
         ner = nlp.add_pipe("ner", last=True)
@@ -50,9 +50,8 @@ def train_ner(train_data, output_dir, iterations=50):
             print(f"Early stopping triggered after {i + 1} iterations.")
             break
 
-
     nlp.to_disk(NER_MODEL_PATH)
-    print(f"Model saved to {output_dir}")
+    print(f"Model saved to {NER_MODEL_PATH}")
 
 
 if __name__ == "__main__":

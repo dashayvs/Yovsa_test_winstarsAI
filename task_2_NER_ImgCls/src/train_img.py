@@ -23,9 +23,9 @@ def train_model(
         train_loader: DataLoader,
         val_loader: DataLoader,
         device: str,
-        epochs: int,
-        learning_rate: float,
-        patience: int
+        epochs: int = 50,
+        learning_rate: float = 0.001,
+        patience: int = 5
 ) -> EfficientNet:
     model = create_model().to(device)
 
