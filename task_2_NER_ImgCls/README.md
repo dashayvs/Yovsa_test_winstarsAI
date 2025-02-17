@@ -1,8 +1,8 @@
 # **NER + Image Classification Pipeline**
 This project is focused on building a Machine Learning (ML) pipeline that combines two distinct models for different tasks:
 
-Named Entity Recognition (NER) model: This model extracts ANIMAL entity from a given text using a transformer-based approach. The model is built using **spaCy**.
-Animal Classification model: This model classifies animals in images into 10 categories. The model is built using the **EfficientNet** architecture.
+- **Named Entity Recognition (NER) model**: This model extracts **ANIMAL** entity from a given text using a transformer-based approach. The model is built using **spaCy**.
+- **Animal Classification model**: This model classifies animals in images into 10 categories. The model is built using the **EfficientNet** architecture.
 
 The goal of the pipeline is to combine these two tasks to answer whether a text description matches the content of an image. The input consists of:
 
@@ -51,7 +51,7 @@ https://www.kaggle.com/datasets/alessiocorrado99/animals10/code?datasetId=59760&
 
 ---
 
-**To use this dataset you should download raw images, divide it into train val and test, ypu can do it by running data_loading.py**
+**To use this dataset you should download raw images, divide it into train val and test, ypu can do it by running 'data_loading.py'**
 
 ---
 
