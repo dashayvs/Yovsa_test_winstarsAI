@@ -3,8 +3,8 @@ import argparse
 import torch
 from img_data_preprocessing import get_data_loader
 from task_2_NER_ImgCls.src.img_classification.model_img import create_model
-from task_2_NER_ImgCls.utils.early_stopping import EarlyStopping
-from task_2_NER_ImgCls.utils.paths import IMG_MODEL_PATH, TRAIN_DIR, VAL_DIR
+from task_2_NER_ImgCls.src.img_classification.early_stopping import EarlyStopping
+from task_2_NER_ImgCls.src.paths import IMG_MODEL_PATH, TRAIN_DIR, VAL_DIR
 from torch import nn, optim
 
 
