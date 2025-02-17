@@ -24,6 +24,21 @@ def load_data(
             npt.NDArray[np.float32],
         ]
 ):
+    """
+    Loads the MNIST dataset using either PyTorch or scikit-learn.
+
+    Parameters:
+        library (str): Specifies which library to use ('pytorch' or 'sklearn').
+        batch_size (int): The batch size for PyTorch DataLoader.
+        test_split (float): The proportion of the dataset to use for testing (only for sklearn).
+        random_seed (int): Random seed for reproducibility.
+
+    Returns:
+        - If 'pytorch': Tuple containing DataLoaders for training and validation,
+          and Tensors for test images and labels.
+        - If 'sklearn': Tuple containing NumPy arrays for training and test data.
+    """
+
     if library == "pytorch":
         transform = torchvision.transforms.Compose(
             [
