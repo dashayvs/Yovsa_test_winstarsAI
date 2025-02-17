@@ -83,5 +83,4 @@ To run inference for the image classification model, use:
 ### The Full Pipeline
 The main script that ties both models together and outputs the result (True or False) is pipeline.py. This script takes a text input and an image input, processes both models, and outputs whether the text description matches the image.
 
-```python src/pipeline.py --text "There is a cow in the picture." --image path/to/image.jpg
-```
+```python src/pipeline.py --text "There is a cow in the picture." --image path/to/image.jpg```
